@@ -117,14 +117,15 @@ Resources:
                 yum install python3 -y
                 pip3 install flask
                 pip3 install flask_mysql
+                mkdir /home/ec2-user/templates
                 echo "${MyDBURI}" > /home/ec2-user/dbserver.endpoint
                 TOKEN="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"
-                FOLDER="https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/main"
-                curl -s --create-dirs -o "/home/ec2-user/templates/index.html" -L "$FOLDER"/templates/index.html
-                curl -s --create-dirs -o "/home/ec2-user/templates/add-update.html" -L "$FOLDER"/templates/add-update.html
-                curl -s --create-dirs -o "/home/ec2-user/templates/delete.html" -L "$FOLDER"/templates/delete.html
-                curl -s --create-dirs -o "/home/ec2-user/app.py" -L "$FOLDER"/phonebook-app.py
-                python3 /home/ec2-user/app.py
+                FOLDER="https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/master"
+                wget https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/master/templates/index.html -P /home/ec2-user/templates/ 
+                wget https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/master/templates/add-update.html -P /home/ec2-user/templates/ 
+                wget https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/master/templates/delete.html -P /home/ec2-user/templates/ 
+                wget https://$TOKEN@raw.githubusercontent.com/hamedamir4/Phonebook-app/master/phonebook-app.py -P /home/ec2-user/
+                python3 /home/ec2-user/phonebook-app.py
               - MyDBURI: !GetAtt MyDB.Endpoint.Address
   MyASG:
     Type: AWS::AutoScaling::AutoScalingGroup
